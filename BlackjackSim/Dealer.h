@@ -217,7 +217,7 @@ void Dealer::takeTurn(Deck& d)
 		if (handTotal <= 16)
 		{
 			hit(d);
-			drawHand(texture);
+			drawHand(textures);
 			//std::this_thread::sleep_for(std::chrono::seconds(2));
 		}
 		else

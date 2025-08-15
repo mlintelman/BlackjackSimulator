@@ -1,12 +1,11 @@
 /*
 * @file PlayingCards.h
 * @brief Header file for playing cards and deck management in a Blackjack simulation.
-* 
+*
 * This file defines the `Card` class representing a playing card with its rank, suit, and texture,
 * and the `Deck` class which manages a collection of cards, allowing for shuffling and dealing.
-* It includes methods for displaying cards, drawing them on the screen, and managing the deck's state.
-* It also provides an enumeration for `Suit` and `Rank` to categorize the cards.
-* 
+* It uses an external texture array (GLuint textures[]) filled by the texture loader.
+*
 * @author Michael Lintelman
 * @date 2024-04-01
 */
@@ -15,10 +14,12 @@
 #include <vector>
 #include <algorithm> // For std::shuffle
 #include <random>    // For std::default_random_engine and std::random_device
+#include <iostream>
+#include <GL/gl.h>   // For GLuint
 
 enum class Suit
 {
-	Hearts, Diamonds, Clubs, Spades
+    Hearts, Diamonds, Clubs, Spades
 };
 
 enum class Rank
@@ -26,7 +27,12 @@ enum class Rank
     Ace, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King
 };
 
-class Card 
+// Helper: convert rank/suit to 0..51 index
+inline int cardIndex(Rank r, Suit s) {
+    return static_cast<int>(r) * 4 + static_cast<int>(s) + 1;
+}
+
+class Card
 {
 private:
     Rank rank = Rank::Ace;
@@ -34,12 +40,11 @@ private:
     int value = 0;
     int width = 110;
     int height = 155;
-	GLuint texture = 0;
-	//bool isFaceUp = true; // Default to face up
+    GLuint texture = 0; // Now stores the *real* GL texture ID
+
 public:
-    // Full constructor with rank, suit, and texture
-    Card(Rank r, Suit s, GLuint tex)
-        : rank(r), suit(s), texture(tex)
+    Card(Rank r, Suit s)
+        : rank(r), suit(s), texture(textures[cardIndex(r, s)])
     {
         switch (rank) {
         case Rank::Ace: value = 1; break;
@@ -61,9 +66,9 @@ public:
 
     void setTexture(GLuint tex) {
         texture = tex;
-	}
+    }
 
-	// Getters for card properties
+    // Getters
     int getWidth() const { return width; }
     int getHeight() const { return height; }
     int getValue() const { return value; }
@@ -95,97 +100,66 @@ public:
         case Suit::Clubs: std::cout << "Clubs"; break;
         case Suit::Spades: std::cout << "Spades"; break;
         }
-        std::cout << " (" << texture << ")" << std::endl;
+        std::cout << " (GL ID: " << texture << ")" << std::endl;
     }
 
-    // Draw the card at a position using its own texture
     void draw(int x, int y) const {
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, texture);
         glColor3f(1.0f, 1.0f, 1.0f);
 
         glBegin(GL_QUADS);
-        glTexCoord2i(0, 1); glVertex2i(x, y);                 // top-left
-        glTexCoord2i(1, 1); glVertex2i(x + width, y);         // top-right
-        glTexCoord2i(1, 0); glVertex2i(x + width, y - height);// bottom-right
-        glTexCoord2i(0, 0); glVertex2i(x, y - height);        // bottom-left
+        glTexCoord2i(0, 1); glVertex2i(x, y);                  // top-left
+        glTexCoord2i(1, 1); glVertex2i(x + width, y);          // top-right
+        glTexCoord2i(1, 0); glVertex2i(x + width, y - height); // bottom-right
+        glTexCoord2i(0, 0); glVertex2i(x, y - height);         // bottom-left
         glEnd();
 
         glDisable(GL_TEXTURE_2D);
     }
 };
 
-
 class Deck
 {
 private:
-    
     int length = 0;
+
 public:
-    // 
     std::vector<Card> cards;
-    Deck()
-    {
-        GLuint texture = 0;
-        // Populate the deck with aces and number cards
-        for (int rank = 0; rank < 13; ++rank)
-        {
-            for (int suit = 0; suit < 4; ++suit)
-            {
-                //GLuint textureId = loadTextureForCard(rank, suit);
-                cards.push_back(Card(static_cast<Rank>(rank), static_cast<Suit>(suit), texture));
-                texture++;
-                length++;
-            }
-        }
-        // Shuffle the deck once the deck is made
-        shuffle();
-        // Push an an ace and some 10s to check blackjack
-        //cards.push_back(Card(static_cast<Rank>(11), static_cast<Suit>(1), texture));
-        //cards.push_back(Card(static_cast<Rank>(12), static_cast<Suit>(3), texture));
-        //cards.push_back(Card(static_cast<Rank>(0), static_cast<Suit>(0), texture));
-    }
 
     int getLength() const { return length; }
 
-    void display() const 
-    {
+    void display() const {
         for (const auto& card : cards) {
             card.display();
         }
     }
 
-    // Shuffle the deck of cards randomly
-    void shuffle()
-    {
+    void shuffle() {
         std::random_device rd;
         std::default_random_engine rng(rd());
         std::shuffle(cards.begin(), cards.end(), rng);
     }
-    // Pop the last card in the deck and return it
-    Card deal()
-    {
+
+    Card deal() {
         Card retCard = cards.back();
         cards.pop_back();
         length--;
         return retCard;
     }
-    void reset()
-    {
+
+    void reset() {
         cards.clear();
-        GLuint texture = 0;
-        // Populate the deck with aces and number cards
-        for (int rank = 0; rank < 13; ++rank)
-        {
-            for (int suit = 0; suit < 4; ++suit)
-            {
-                //GLuint textureId = loadTextureForCard(rank, suit);
-                cards.push_back(Card(static_cast<Rank>(rank), static_cast<Suit>(suit), texture));
-                texture++;
+        populate();
+        shuffle();
+    }
+
+    void populate() {
+        for (int rank = 0; rank < 13; ++rank) {
+            for (int suit = 0; suit < 4; ++suit) {
+                cards.emplace_back(static_cast<Rank>(rank), static_cast<Suit>(suit));
                 length++;
             }
         }
-        // Shuffle the deck once the deck is made
-        shuffle();
     }
 };

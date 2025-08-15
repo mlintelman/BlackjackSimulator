@@ -260,7 +260,7 @@ bool Player::takeAction(Deck& d, int action)
         // if a 1 is passed in, it means hit
     case 1:
         hit(d);
-        drawHand(texture);
+        drawHand(textures);
         break;
         // 2 means stand
     case 2:
@@ -268,7 +268,7 @@ bool Player::takeAction(Deck& d, int action)
         break;
     case 3:
         doubleDown(d);
-        drawHand(texture);
+        drawHand(textures);
         break;
     case 4:
         surrender();

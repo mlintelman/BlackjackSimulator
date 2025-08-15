@@ -10,7 +10,7 @@
 */
 
 #include <GL/glut.h>
-GLuint texture[65];
+GLuint textures[66];
 #include "SOIL.h"
 #include <string>
 #include <stdio.h>
@@ -68,437 +68,131 @@ void init(void)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glFrontFace(GL_CW);
     // H, D, C, S
+	textures[0] = SOIL_load_OGL_texture("cards/backs/back_1.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+   // Aces
+    textures[1] = SOIL_load_OGL_texture("cards/hearts/hearts_1.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[2] = SOIL_load_OGL_texture("cards/diamonds/diamonds_1.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[3] = SOIL_load_OGL_texture("cards/clubs/clubs_1.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[4] = SOIL_load_OGL_texture("cards/spades/spades_1.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
 
-    // Aces
-    texture[0] = SOIL_load_OGL_texture(
-        "cards/hearts/hearts_1.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[1] = SOIL_load_OGL_texture(
-        "cards/diamonds/diamonds_1.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[2] = SOIL_load_OGL_texture(
-        "cards/clubs/clubs_1.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[3] = SOIL_load_OGL_texture(
-        "cards/spades/spades_1.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
     // Twos
-    texture[4] = SOIL_load_OGL_texture(
-        "cards/hearts/hearts_2.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[5] = SOIL_load_OGL_texture(
-        "cards/diamonds/diamonds_2.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[6] = SOIL_load_OGL_texture(
-        "cards/clubs/clubs_2.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[7] = SOIL_load_OGL_texture(
-        "cards/spades/spades_2.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    // Threes
-    texture[8] = SOIL_load_OGL_texture(
-        "cards/hearts/hearts_3.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[9] = SOIL_load_OGL_texture(
-        "cards/diamonds/diamonds_3.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[10] = SOIL_load_OGL_texture(
-        "cards/clubs/clubs_3.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[11] = SOIL_load_OGL_texture(
-        "cards/spades/spades_3.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    // Fours
-    texture[12] = SOIL_load_OGL_texture(
-        "cards/hearts/hearts_4.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[13] = SOIL_load_OGL_texture(
-        "cards/diamonds/diamonds_4.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[14] = SOIL_load_OGL_texture(
-        "cards/clubs/clubs_4.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[15] = SOIL_load_OGL_texture(
-        "cards/spades/spades_4.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    // Fives
-    texture[16] = SOIL_load_OGL_texture(
-        "cards/hearts/hearts_5.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[17] = SOIL_load_OGL_texture(
-        "cards/diamonds/diamonds_5.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[18] = SOIL_load_OGL_texture(
-        "cards/clubs/clubs_5.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[19] = SOIL_load_OGL_texture(
-        "cards/spades/spades_5.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    // Sixes
-    texture[20] = SOIL_load_OGL_texture(
-        "cards/hearts/hearts_6.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[21] = SOIL_load_OGL_texture(
-        "cards/diamonds/diamonds_6.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[22] = SOIL_load_OGL_texture(
-        "cards/clubs/clubs_6.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[23] = SOIL_load_OGL_texture(
-        "cards/spades/spades_6.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    // Sevens
-    texture[24] = SOIL_load_OGL_texture(
-        "cards/hearts/hearts_7.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[25] = SOIL_load_OGL_texture(
-        "cards/diamonds/diamonds_7.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[26] = SOIL_load_OGL_texture(
-        "cards/clubs/clubs_7.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[27] = SOIL_load_OGL_texture(
-        "cards/spades/spades_7.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    // Eights
-    texture[28] = SOIL_load_OGL_texture(
-        "cards/hearts/hearts_8.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[29] = SOIL_load_OGL_texture(
-        "cards/diamonds/diamonds_8.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[30] = SOIL_load_OGL_texture(
-        "cards/clubs/clubs_8.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[31] = SOIL_load_OGL_texture(
-        "cards/spades/spades_8.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    // Nines
-    texture[32] = SOIL_load_OGL_texture(
-        "cards/hearts/hearts_9.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[33] = SOIL_load_OGL_texture(
-        "cards/diamonds/diamonds_9.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[34] = SOIL_load_OGL_texture(
-        "cards/clubs/clubs_9.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[35] = SOIL_load_OGL_texture(
-        "cards/spades/spades_9.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    // Tens
-    texture[36] = SOIL_load_OGL_texture(
-        "cards/hearts/hearts_10.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[37] = SOIL_load_OGL_texture(
-        "cards/diamonds/diamonds_10.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[38] = SOIL_load_OGL_texture(
-        "cards/clubs/clubs_10.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[39] = SOIL_load_OGL_texture(
-        "cards/spades/spades_10.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    // Jacks
-    texture[40] = SOIL_load_OGL_texture(
-        "cards/hearts/hearts_11.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[41] = SOIL_load_OGL_texture(
-        "cards/diamonds/diamonds_11.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[42] = SOIL_load_OGL_texture(
-        "cards/clubs/clubs_11.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[43] = SOIL_load_OGL_texture(
-        "cards/spades/spades_11.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    // Queens
-    texture[44] = SOIL_load_OGL_texture(
-        "cards/hearts/hearts_12.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[45] = SOIL_load_OGL_texture(
-        "cards/diamonds/diamonds_12.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[46] = SOIL_load_OGL_texture(
-        "cards/clubs/clubs_12.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[47] = SOIL_load_OGL_texture(
-        "cards/spades/spades_12.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    // Kings
-    texture[48] = SOIL_load_OGL_texture(
-        "cards/hearts/hearts_13.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[49] = SOIL_load_OGL_texture(
-        "cards/diamonds/diamonds_13.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[50] = SOIL_load_OGL_texture(
-        "cards/clubs/clubs_13.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[51] = SOIL_load_OGL_texture(
-        "cards/spades/spades_13.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    // Card back (red)
-    texture[52] = SOIL_load_OGL_texture(
-        "cards/backs/back_1.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    // Chips
-    texture[53] = SOIL_load_OGL_texture(
-        "chips/red.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[54] = SOIL_load_OGL_texture(
-        "chips/green.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[55] = SOIL_load_OGL_texture(
-        "chips/blue.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[56] = SOIL_load_OGL_texture(
-        "chips/yellow.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[57] = SOIL_load_OGL_texture(
-        "chips/orange.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[58] = SOIL_load_OGL_texture(
-        "chips/purple.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[59] = SOIL_load_OGL_texture(
-        "buttons/hit.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[60] = SOIL_load_OGL_texture(
-        "buttons/stand.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    // Background
-    texture[61] = SOIL_load_OGL_texture(
-        "misc/background.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[62] = SOIL_load_OGL_texture(
-        "buttons/blank.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[63] = SOIL_load_OGL_texture(
-        "buttons/youlose.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
-    texture[64] = SOIL_load_OGL_texture(
-        "misc/rules.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y
-    );
+    textures[5] = SOIL_load_OGL_texture("cards/hearts/hearts_2.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[6] = SOIL_load_OGL_texture("cards/diamonds/diamonds_2.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[7] = SOIL_load_OGL_texture("cards/clubs/clubs_2.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[8] = SOIL_load_OGL_texture("cards/spades/spades_2.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
 
-    glBindTexture(GL_TEXTURE_2D, texture[0]);
+    // Threes
+    textures[9] = SOIL_load_OGL_texture("cards/hearts/hearts_3.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[10] = SOIL_load_OGL_texture("cards/diamonds/diamonds_3.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[11] = SOIL_load_OGL_texture("cards/clubs/clubs_3.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[12] = SOIL_load_OGL_texture("cards/spades/spades_3.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+
+    // Fours
+    textures[13] = SOIL_load_OGL_texture("cards/hearts/hearts_4.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[14] = SOIL_load_OGL_texture("cards/diamonds/diamonds_4.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[15] = SOIL_load_OGL_texture("cards/clubs/clubs_4.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[16] = SOIL_load_OGL_texture("cards/spades/spades_4.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+
+    // Fives
+    textures[17] = SOIL_load_OGL_texture("cards/hearts/hearts_5.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[18] = SOIL_load_OGL_texture("cards/diamonds/diamonds_5.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[19] = SOIL_load_OGL_texture("cards/clubs/clubs_5.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[20] = SOIL_load_OGL_texture("cards/spades/spades_5.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+
+    // Sixes
+    textures[21] = SOIL_load_OGL_texture("cards/hearts/hearts_6.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[22] = SOIL_load_OGL_texture("cards/diamonds/diamonds_6.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[23] = SOIL_load_OGL_texture("cards/clubs/clubs_6.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[24] = SOIL_load_OGL_texture("cards/spades/spades_6.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+
+    // Sevens
+    textures[25] = SOIL_load_OGL_texture("cards/hearts/hearts_7.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[26] = SOIL_load_OGL_texture("cards/diamonds/diamonds_7.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[27] = SOIL_load_OGL_texture("cards/clubs/clubs_7.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[28] = SOIL_load_OGL_texture("cards/spades/spades_7.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+
+    // Eights
+    textures[29] = SOIL_load_OGL_texture("cards/hearts/hearts_8.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[30] = SOIL_load_OGL_texture("cards/diamonds/diamonds_8.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[31] = SOIL_load_OGL_texture("cards/clubs/clubs_8.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[32] = SOIL_load_OGL_texture("cards/spades/spades_8.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+
+    // Nines
+    textures[33] = SOIL_load_OGL_texture("cards/hearts/hearts_9.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[34] = SOIL_load_OGL_texture("cards/diamonds/diamonds_9.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[35] = SOIL_load_OGL_texture("cards/clubs/clubs_9.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[36] = SOIL_load_OGL_texture("cards/spades/spades_9.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+
+    // Tens
+    textures[37] = SOIL_load_OGL_texture("cards/hearts/hearts_10.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[38] = SOIL_load_OGL_texture("cards/diamonds/diamonds_10.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[39] = SOIL_load_OGL_texture("cards/clubs/clubs_10.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[40] = SOIL_load_OGL_texture("cards/spades/spades_10.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+
+    // Jacks
+    textures[41] = SOIL_load_OGL_texture("cards/hearts/hearts_11.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[42] = SOIL_load_OGL_texture("cards/diamonds/diamonds_11.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[43] = SOIL_load_OGL_texture("cards/clubs/clubs_11.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[44] = SOIL_load_OGL_texture("cards/spades/spades_11.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+
+    // Queens
+    textures[45] = SOIL_load_OGL_texture("cards/hearts/hearts_12.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[46] = SOIL_load_OGL_texture("cards/diamonds/diamonds_12.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[47] = SOIL_load_OGL_texture("cards/clubs/clubs_12.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[48] = SOIL_load_OGL_texture("cards/spades/spades_12.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+
+    // Kings
+    textures[49] = SOIL_load_OGL_texture("cards/hearts/hearts_13.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[50] = SOIL_load_OGL_texture("cards/diamonds/diamonds_13.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[51] = SOIL_load_OGL_texture("cards/clubs/clubs_13.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[52] = SOIL_load_OGL_texture("cards/spades/spades_13.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+
+    // Card back (red)
+    textures[53] = SOIL_load_OGL_texture("cards/backs/back_1.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+
+    // Chips
+    textures[54] = SOIL_load_OGL_texture("chips/red.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[55] = SOIL_load_OGL_texture("chips/green.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[56] = SOIL_load_OGL_texture("chips/blue.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[57] = SOIL_load_OGL_texture("chips/yellow.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[58] = SOIL_load_OGL_texture("chips/orange.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[59] = SOIL_load_OGL_texture("chips/purple.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+
+    // Buttons
+    textures[60] = SOIL_load_OGL_texture("buttons/hit.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[61] = SOIL_load_OGL_texture("buttons/stand.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+
+    // Background and UI
+    textures[62] = SOIL_load_OGL_texture("misc/background.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[63] = SOIL_load_OGL_texture("buttons/blank.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[64] = SOIL_load_OGL_texture("buttons/youlose.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    textures[65] = SOIL_load_OGL_texture("misc/rules.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+
+    // Updated bindings
+    glBindTexture(GL_TEXTURE_2D, textures[0]);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    if (0 == texture[0])
-    {
-        printf("SOIL loading error: '%s'\n", SOIL_last_result());
-    }
-	background.setTexture(texture[61]);
-    greenCover.setTexture(texture[61]);
-    half.setTexture(texture[53]);
-    one.setTexture(texture[54]);
-    five.setTexture(texture[55]);
-    twentyfive.setTexture(texture[56]);
-    onehundred.setTexture(texture[57]);
-    fivehundred.setTexture(texture[58]);
-    hit.setTexture(texture[62]);
-    stand.setTexture(texture[62]);
-    doubleDown.setTexture(texture[62]);
-    surrender.setTexture(texture[62]);
-    endScreen.setTexture(texture[63]);
-	rules.setTexture(texture[64]);
-	cardBack.setTexture(texture[52]);
+    background.setTexture(textures[62]);
+    greenCover.setTexture(textures[62]);
+    half.setTexture(textures[54]);
+    one.setTexture(textures[55]);
+    five.setTexture(textures[56]);
+    twentyfive.setTexture(textures[57]);
+    onehundred.setTexture(textures[58]);
+    fivehundred.setTexture(textures[59]);
+    hit.setTexture(textures[63]);
+    stand.setTexture(textures[63]);
+    doubleDown.setTexture(textures[63]);
+    surrender.setTexture(textures[63]);
+    endScreen.setTexture(textures[64]);
+    rules.setTexture(textures[65]);
+    cardBack.setTexture(textures[53]);
+
+	// Populate deck now that textures are loaded
+    deck.populate();
+    // Shuffle
+	deck.shuffle();
 }
 
 void write(GLfloat x, GLfloat y, const char* message)
@@ -578,7 +272,7 @@ void display_func(void)
     //for (Card c : deck.cards)
     //{
     //    c.display();
-    //    c.draw(x, y, texture[c.getTexture()]);
+    //    c.draw(x, y, textures[c.getTexture()]);
     //    x += c.getWidth() / 2;
     //    if (x > 1100)
     //    {
@@ -601,8 +295,8 @@ void display_func(void)
         if (!roundStarted)
         {
             greenCover.draw();
-            player.drawHand(texture);
-            dealer.drawHand(texture);
+            player.drawHand(textures);
+            dealer.drawHand(textures);
             if (player.calculateHandTotal() > 0)
             {
                 glDisable(GL_BLEND);
@@ -640,9 +334,18 @@ void display_func(void)
                 dealer.hand.push_back(deck.deal());
                 player.hand.push_back(deck.deal());
                 dealer.hand.push_back(deck.deal());
+                int handTotal = 0;
+                std::cout << "Player's hand:" << std::endl;
+                for (const Card& c : player.hand)
+                {
+                    handTotal += c.getValue();
+                    c.display();
+
+                }
+                std::cout << "Player's total:  " << handTotal << std::endl << std::endl;
             }
-            player.drawHand(texture);
-            dealer.drawHand(texture);
+            player.drawHand(textures);
+            dealer.drawHand(textures);
 
             hit.draw();
             stand.draw();
@@ -667,6 +370,7 @@ void display_func(void)
                     }
                 }
             }
+
             //Write the player's total
             // Use string so we can concatenate the message with the total variable
             string strTotal = to_string(player.getTotal());
@@ -876,7 +580,7 @@ void display_func(void)
             writeX = 315;
             glEnable(GL_BLEND);
             //endScreen.setVisible(true);
-            //endScreen.draw(50, 100, texture[62]);
+            //endScreen.draw(50, 100, textures[62]);
             glDisable(GL_BLEND);
             for (int x = 0; x < 3; x++)
             {
@@ -891,7 +595,7 @@ void display_func(void)
             writeX = 330;
             glEnable(GL_BLEND);
             //endScreen.setVisible(true);
-            //endScreen.draw(50, 100, texture[62]);
+            //endScreen.draw(50, 100, textures[62]);
             glDisable(GL_BLEND);
             for (int x = 0; x < 3; x++)
             {
