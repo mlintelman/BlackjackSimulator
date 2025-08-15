@@ -8,7 +8,7 @@
 * from Sprite and provide additional functionality specific to their types.
 * 
 * @author Michael Lintelman
-* @date 2024-04-01
+* @date 2025-08-14
 */
 
 #pragma once

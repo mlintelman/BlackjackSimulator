@@ -68,7 +68,9 @@ void init(void)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glFrontFace(GL_CW);
     // H, D, C, S
-	textures[0] = SOIL_load_OGL_texture("cards/backs/back_1.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+	//
+    // All the playing card textures. Starting at index 1 for ace of hearts
+    // 
    // Aces
     textures[1] = SOIL_load_OGL_texture("cards/hearts/hearts_1.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
     textures[2] = SOIL_load_OGL_texture("cards/diamonds/diamonds_1.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
@@ -173,6 +175,7 @@ void init(void)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+	// Set the textures for the sprites and buttons
     background.setTexture(textures[62]);
     greenCover.setTexture(textures[62]);
     half.setTexture(textures[54]);
@@ -264,34 +267,24 @@ void display_func(void)
 {
     static int winCase;
     glClear(GL_COLOR_BUFFER_BIT);
-    // draw background
+    // draw background and rules
     background.draw();
-    // display full deck for debugging purposes
-    //int y = 600;
-    //int x = 0;
-    //for (Card c : deck.cards)
-    //{
-    //    c.display();
-    //    c.draw(x, y, textures[c.getTexture()]);
-    //    x += c.getWidth() / 2;
-    //    if (x > 1100)
-    //    {
-    //        x = 0;
-    //        y -= 50;
-    //    }
-    //}
     rules.draw();
+
     if (gameOver)
     {
         endScreen.draw();
     }
+    // If the game is not over, play the game
     else
     {
+        // If both turns are over start a new round
         if (player.getTurnOver() && dealer.getTurnOver())
         {
 			player.newRound();
 			dealer.newRound();
         }
+        // If the round hasn't started, d
         if (!roundStarted)
         {
             greenCover.draw();
@@ -322,12 +315,14 @@ void display_func(void)
                 glEnable(GL_BLEND);
             }
         }
+        
         if (roundStarted)
         {
             // If the deck is at 50%, reset the deck
             if (deck.cards.size() <= 26)
                 deck.reset();
             winCase = 0;
+			// Deal cards if the round has started and the player has no cards in hand, then draw the hands
             if (player.hand.size() == 0)
             {
                 player.hand.push_back(deck.deal());
@@ -346,7 +341,7 @@ void display_func(void)
             }
             player.drawHand(textures);
             dealer.drawHand(textures);
-
+			// Draw hit and stand buttons, and double down and surrender if the player only has two cards
             hit.draw();
             stand.draw();
             if (player.hand.size() == 2)

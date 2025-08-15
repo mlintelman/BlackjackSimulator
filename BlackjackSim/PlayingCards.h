@@ -12,10 +12,8 @@
 
 #pragma once
 #include <vector>
-#include <algorithm> // For std::shuffle
-#include <random>    // For std::default_random_engine and std::random_device
-#include <iostream>
-#include <GL/gl.h>   // For GLuint
+#include <algorithm>
+#include <random>
 
 enum class Suit
 {
@@ -27,7 +25,7 @@ enum class Rank
     Ace, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King
 };
 
-// Helper: convert rank/suit to 0..51 index
+// Helper: convert rank/suit to 1..52 index
 inline int cardIndex(Rank r, Suit s) {
     return static_cast<int>(r) * 4 + static_cast<int>(s) + 1;
 }
@@ -40,11 +38,11 @@ private:
     int value = 0;
     int width = 110;
     int height = 155;
-    GLuint texture = 0; // Now stores the *real* GL texture ID
+    GLuint texture = 0;
 
 public:
     Card(Rank r, Suit s)
-        : rank(r), suit(s), texture(textures[cardIndex(r, s)])
+		: rank(r), suit(s), texture(textures[cardIndex(r, s)]) // Use helper function to convert rank/suit to index for textures
     {
         switch (rank) {
         case Rank::Ace: value = 1; break;
@@ -119,6 +117,7 @@ public:
     }
 };
 
+// Deck class to manage a collection of cards
 class Deck
 {
 private:
@@ -128,7 +127,7 @@ public:
     std::vector<Card> cards;
 
     int getLength() const { return length; }
-
+    // Display entire deck for debugging
     void display() const {
         for (const auto& card : cards) {
             card.display();
@@ -147,13 +146,13 @@ public:
         length--;
         return retCard;
     }
-
+	// Reset the deck to its initial state and shuffle
     void reset() {
         cards.clear();
         populate();
         shuffle();
     }
-
+	// Populate the deck with 52 playing cards
     void populate() {
         for (int rank = 0; rank < 13; ++rank) {
             for (int suit = 0; suit < 4; ++suit) {
